@@ -1,0 +1,90 @@
+<div class="login-container">
+  <h1>Authentication using Angular and Firebase</h1>
+  <mat-card class="login-card">
+    <mat-card-title>Sign Up</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSignUpBtnClick()">
+        <mat-form-field appearance="outline">
+          <button mat-icon-button matPrefix type="button" color="primary">
+            <mat-icon>email</mat-icon>
+          </button>
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            placeholder="Please enter your email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+
+          <input
+            type="password"
+            matInput
+            placeholder="Enter you password"
+            formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+
+          <input
+            type="password"
+            matInput
+            placeholder="Enter you confirm new password"
+            formControlName="confirmNewPassword"
+            [type]="hidePassword ? 'password' : 'text'"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button type="submit" mat-raised-button color="primary">
+            Sign Up
+          </button>
+          <button
+            mat-stroked-button
+            type="button"
+            color="accent"
+            routerLink="/auth/login"
+          >
+            Go Back to Login
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    <div class="link-container">
+      <a routerLink="/auth/forgot-password">Forgot password?</a>
+    </div>
+  </mat-card>
+</div>
