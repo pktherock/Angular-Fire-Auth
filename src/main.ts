@@ -8,5 +8,18 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+const loading = document.getElementById('loading');
+if (loading) {
+  loading.style.display = 'block';
+}
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    if (loading) {
+      loading.style.display = 'none';
+    }
+  });
