@@ -1,5 +1,17 @@
 # FirebaseAuthDemo
 
+## Features
+
+- Angular 14
+- Angular Material - 13
+- Firebase (Angular fire 2)
+- App Init loader
+- Authentication and Authorization
+- Session Management
+- Edit user info -> email, password
+- User can delete themselves from app
+- User can login and use app, only from one device at a time
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.10.
 
 ## Development server
