@@ -9,6 +9,14 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.success-snackbar {
+  background-color: #74ad5b;
+}
+
+.error-snackbar {
+  background-color: #704e4b;
+}
+
 .preloader {
   position: fixed;
   top: 0;

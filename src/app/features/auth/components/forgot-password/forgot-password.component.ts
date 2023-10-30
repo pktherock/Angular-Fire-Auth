@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert/alert.service';
 import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm!: FormGroup;
   hidePassword: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.forgotPasswordForm = new FormGroup({
@@ -26,13 +31,15 @@ export class ForgotPasswordComponent implements OnInit {
       const res = await this.authService.sendResetPasswordLinkToEmail(email);
       console.log(res);
       if (res.success) {
-        alert('Reset Password Link sended to you registered email id');
+        this.alertService.success(
+          'Reset Password Link sended to you registered email id'
+        );
         this.router.navigate(['auth/login']);
       }
 
       switch (res.error) {
         case 'auth/user-not-found':
-          alert('email is not correct!!');
+          this.alertService.error('email is not correct!!');
           break;
         default:
           console.log(res.error);
@@ -40,5 +47,4 @@ export class ForgotPasswordComponent implements OnInit {
       }
     }
   }
-
 }

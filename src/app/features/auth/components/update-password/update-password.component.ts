@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert/alert.service';
 import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
@@ -13,7 +14,11 @@ export class UpdatePasswordComponent implements OnInit {
   hideOldPassword: boolean = true;
   hidePassword: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.updatePasswordForm = new FormGroup({
@@ -33,6 +38,7 @@ export class UpdatePasswordComponent implements OnInit {
       );
       if (res.success) {
         this.router.navigate(['dashboard']);
+        this.alertService.success('Password updated successfully');
       }
 
       switch (res.error) {
@@ -41,7 +47,12 @@ export class UpdatePasswordComponent implements OnInit {
           this.router.navigate(['']);
           break;
         case 'auth/wrong-password':
-          alert('Password is not correct!!');
+          this.alertService.error('Password is not correct!!');
+          break;
+        case 'auth/too-many-requests':
+          this.alertService.error(
+            'To many incorrect attempts, please try after some time, or reset password to to restore!'
+          );
           break;
         case 'auth/user-mismatch':
           this.router.navigate(['']);
@@ -50,6 +61,8 @@ export class UpdatePasswordComponent implements OnInit {
           console.log(res.error);
           break;
       }
+    } else {
+      this.alertService.error("password dose'nt match");
     }
   }
 }

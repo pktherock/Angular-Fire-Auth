@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert/alert.service';
 import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class DeleteUserComponent implements OnInit {
   deleteUserForm!: FormGroup;
   hidePassword: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.deleteUserForm = new FormGroup({
@@ -26,7 +31,7 @@ export class DeleteUserComponent implements OnInit {
       const res = await this.authService.deleteUserFromDB(password);
       console.log(res);
       if (res.success) {
-        alert('User has been DELETED successfully');
+        this.alertService.success('User has been DELETED successfully');
         this.router.navigate(['auth/login']);
       }
 
@@ -34,7 +39,10 @@ export class DeleteUserComponent implements OnInit {
         res.error // todo
       ) {
         case 'auth/user-not-found':
-          alert('email is not correct!!');
+          this.alertService.error('email is not correct!!');
+          break;
+        case 'auth/wrong-password':
+          this.alertService.error('Incorrect password');
           break;
         default:
           console.log(res.error);

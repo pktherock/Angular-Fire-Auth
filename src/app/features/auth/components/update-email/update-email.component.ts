@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert/alert.service';
 import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class UpdateEmailComponent implements OnInit {
   updateEmailForm!: FormGroup;
   hidePassword: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.updateEmailForm = new FormGroup({
@@ -36,7 +41,7 @@ export class UpdateEmailComponent implements OnInit {
           this.router.navigate(['']);
           break;
         case 'auth/wrong-password':
-          alert('Password is not correct!!');
+          this.alertService.error('Password is not correct!!');
           break;
         case 'auth/user-mismatch':
           this.router.navigate(['']);
